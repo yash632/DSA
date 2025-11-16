@@ -1,4 +1,5 @@
 # Definition for a binary tree node.
+from math import inf
 from typing import Optional, List
 
 class TreeNode:
@@ -6,16 +7,16 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+        
 class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def rec(root, l, h):
+            if not root:
+                return True
 
-    def rec(self, root, arr):
-        if not root:
-            return 
-        self.rec(root.left, arr)
-        arr.append(root.val)
-        self.rec(root.right, arr)
+            if not(l < root.val < h):
+                return False
+            
+            return rec(root.left, l, root.val) and rec(root.right, root.val, h)
 
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        arr = []
-        self.rec(root, arr)
-        return arr
+        return rec(root, (-inf), (inf))
